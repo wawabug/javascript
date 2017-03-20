@@ -93,7 +93,6 @@
     </style>
     <script>
 		window.onload = function(){
-    		
     		function SelectAlert(){
     			this.classname = "";
     		}
@@ -112,10 +111,10 @@
 				var selects = document.querySelector("."+this.classname);
     				btn.onclick = function(){
     					selects.setAttribute("class","alert hide");
+    					//延迟200ms后隐藏，200ms为动画渲染事件，不延迟隐藏则无法出现类下滑隐藏效果
     					setTimeout(function(){
     						selects.style.display = "none";
     					},200)
- 						
     				}
     		}
     		//选择
@@ -130,14 +129,13 @@
     				}
 				}	
     		}
-    		
+    		//创建SelectAlert实例
     		var choose = new SelectAlert();
     		choose.classname = "alert";
     		choose.show("clickbtn");
     		choose.hide("cancel");
     		choose.hide("ok");
     		choose.chooseactipn("choose");
-
  	 	}	
     </script>
 </head>
