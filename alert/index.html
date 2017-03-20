@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>底部弹框</title>
+    <style>
+    	html{font-size: 50px;}
+    	*{
+    		margin: 0rem;
+    		padding: 0rem;
+    	}
+    	body{margin: 0rem;}
+    	.alert{
+    		position: fixed;
+    		bottom: 0rem;
+    		z-index: 999;
+    		width: 100%;
+    		border-top: 0.01rem solid #dfdfdf;
+    	}
+    	.show{
+    		-webkit-animation: moveup .2s 1 ease-in;
+    	}
+    	.hide{
+    		-webkit-animation: movedown .2s 1 ease-out;
+    	}
+    	.alert p{
+    		color: #888888;
+			font-size: 0.3rem;
+			line-height: 0.38rem;
+			padding: 0.3rem 0.44rem 0.3rem;
+			border-bottom: 0.01rem solid #dfdfdf;
+    	}
+    	.alert ul li{
+    		height: 0.78rem;
+    		list-style: none;
+    		line-height: 0.78rem;
+    		padding-left: 0.44rem;
+			font-size: 0.3rem;
+			color: #353535;
+    	}
+    	.btns{
+    		width: 100%;
+    		overflow: hidden;
+    		border-top: 0.01rem solid #dfdfdf;
+    	}
+    	.btns a{
+    		display: inline-block;
+    		width: 50%;
+    		height: 0.83rem;
+    		line-height: 0.83rem;
+    		font-size: 0.34rem;
+    		text-align: center;
+    		text-decoration: none;
+    		box-sizing: border-box;
+    	}
+    	.cancel{
+    		border-right: 0.01rem solid #dfdfdf;
+    		float: left;
+    	}
+    	.ok{
+			color: #02BB00;
+			float: right;
+    	}
+    	.choose{
+    		background:rgb(255, 236, 207) url(choose.png) no-repeat;
+    		background-size: 0.25rem 0.19rem;
+    		background-position: 90% center;
+    	}
+    	@-webkit-keyframes moveup{
+    		from{
+    			opacity: 0;
+    			bottom: -2.5rem;
+    		}to{
+    			opacity: 1;
+    			bottom: 0rem;
+    			transform: translateY(0rem);
+    			-webkit-transform: translateY(0rem);
+    		}
+    	}
+    	@-webkit-keyframes movedown{
+    		from{
+    			opacity: 1;
+    			bottom: 0rem;
+    		}to{
+    			opacity: 0.5;
+    			bottom: -2.5rem;
+    			transform: translateY(2.5rem);
+    			-webkit-transform: translateY(2.5rem);
+    		}
+    	}
+    </style>
+    <script>
+		window.onload = function(){
+    		
+    		function SelectAlert(){
+    			this.classname = "";
+    		}
+    		//显示
+    		SelectAlert.prototype.show = function(classname){
+				var btns = document.querySelector("."+classname);
+				var selects = document.querySelector("."+this.classname)
+				btns.onclick = function(){
+					selects.style.display = "block";
+					selects.setAttribute("class","alert show");
+				}
+    		}
+    		//隐藏
+    		SelectAlert.prototype.hide = function(classname){
+				var btn = document.querySelector("."+classname);
+				var selects = document.querySelector("."+this.classname);
+    				btn.onclick = function(){
+    					selects.setAttribute("class","alert hide");
+    					setTimeout(function(){
+    						selects.style.display = "none";
+    					},200)
+ 						
+    				}
+    		}
+    		//选择
+    		SelectAlert.prototype.chooseactipn = function(classname){
+				var lis = document.querySelectorAll("li")
+				for(var i=0,len=lis.length,obj;obj=lis[i++];i<len){
+					obj.onclick = function(){
+						for(var i=0,len=lis.length,obj;obj=lis[i++];i<len){
+							obj.className = "";
+						}
+    					this.className=classname;
+    				}
+				}	
+    		}
+    		
+    		var choose = new SelectAlert();
+    		choose.classname = "alert";
+    		choose.show("clickbtn");
+    		choose.hide("cancel");
+    		choose.hide("ok");
+    		choose.chooseactipn("choose");
+
+ 	 	}	
+    </script>
+</head>
+<body>
+    <div class="wrap">
+		<!--select alert from bottom-->
+		<input type="button" value="请选择主号码" class="clickbtn"/>
+		<div class="alert" style="display: none;">
+			<p>请选择您的工号</p>
+			<ul>
+				<li>9999NJ9901650085</li>
+				<li>9999NJ99016502</li>
+				<li>9999NJ99016502</li>
+				<li>9999NJ99016502</li>
+			</ul>
+			<div class="btns">
+				<a href="javascript:;" class="cancel">取消</a>
+				<a href="javascript:;" class="ok">确定</a>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
