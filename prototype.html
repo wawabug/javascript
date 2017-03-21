@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="format-detection" content="telephone=no">
+		<title>原生js ＡＰＩ　学习笔记</title>
+		<style>
+		html{height: 250%;font-size: 14px;position: relative;}
+			li{
+				
+				height: 30px;
+				background: greenyellow;
+				margin-bottom: 10px;
+			}
+			.man{
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				background: #f00;
+				position: absolute;
+				bottom: 300px;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				console.time()
+				console.profile();
+				
+				var p1 = document.querySelector(".p1");
+				var ownerDocument = p1.ownerDocument;
+				console.log("1:"+ownerDocument);
+				var nextobj = p1.nextSibling;
+				var flag = typeof(nextobj)
+				//object
+//				alert(flag)
+				var classname = nextobj.className;
+				//undefined
+				console.log("2:"+classname)
+				
+				var parent = p1.parentNode;
+				console.log("3:"+parent);
+				
+				var div = document.querySelector("#div")
+				//包括空白节点
+				var doms = div.firstElementChild;
+				console.log("4:"+doms.className)
+				//向div后面添加dom节点
+				var bool = div.hasChildNodes()
+				console.log("5:"+bool);
+				console.log(document.readyState)
+				//f返回complete
+				var classlist = p1.classList;
+				console.log("6:"+classlist)
+				console.log("7:"+p1.clientTop)
+				console.log("8:"+p1.offsetHeight)
+				console.log("9:"+p1.scrollHeight)
+				console.log("10:"+p1.offsetLeft)
+				console.log("11:"+div.children)
+				console.log("12:"+div.children.item(0).classList)
+				
+				
+				//监听事件
+				var ul = document.querySelector("ul")
+				var event = window.event || event;
+				var target = event.target || event.srcElement;
+				ul.addEventListener("click",function(event){
+					if(event.target.tagName.toLowerCase()==="li"){
+						console.log(event.target.className)
+					}
+				})
+				
+				var man = document.querySelector(".man");
+				div.onclick = function(){
+					man.scrollIntoView(true);
+					console.log("执行啦")
+				}
+				
+				//insertAdjacenHTML 添加的新元素可以绑定点击事件
+				var htmlstring = "<h3 class='new'>我是小黑不黑</h3><p>哈哈哈哈</p>"
+				var htmls = "<span class='add'>23333</span>"
+				div.insertAdjacentHTML("beforebegin",htmlstring+htmls)
+				var news = document.querySelector(".new");
+				news.onclick = function(){
+					console.log("可以点击啦1")
+				}
+				
+				//可以动态添加元素，此方法与jquery的动态添加不同，可以绑定点击事件
+				function addElement(element,htmlstring){
+					var element = document.querySelector(element)
+					element.insertAdjacentHTML("beforebegin",htmlstring);
+				}
+				
+				var ss = "<div class='aa'>哈哈</div>"
+				addElement("ul",ss);
+				var aa = document.querySelector(".aa")
+				aa.onclick = function(){
+					console.log("可以点击啦hahahh")
+				}
+				
+				//添加空元素
+				p1.insertAdjacentElement("beforebegin", document.createElement("a"))
+				//添加文本节点，可在原来的文本前或者后添加文本
+				p1.insertAdjacentText("beforeEnd", "哈哈哈哈和呵护");
+				
+				//li
+				var lis = document.querySelector("li");
+				var stye = lis.setAttribute("style",'color: #FF0000;font-size: 20px;')
+				var obj = {
+					"xiao":"小",
+					"hei":"黑"
+				}
+				console.log(obj.toLocaleString())
+//				var csstext = lis.style.cssText = "color: #FF0000;font-size: 20px;"
+				
+				var arr = [1222,2,3];
+				var num= arr.push(4,5,6);
+				
+//				console.log(arr.reverse())
+				console.log(arr.slice(2,4));
+				
+				console.log(arr.splice(0,1,"小黑","不黑"));
+				console.log(arr);
+				var str = "小黑不黑";
+				console.log(str.split(""))
+				var lis = document.querySelectorAll("li");
+				var bool = Array.isArray(lis)
+				console.log(bool);
+				var  newarr= arr.map(function(valvue,index,arr){
+					console.log("哈:"+valvue+1);
+					console.log(index);
+					console.log(arr);
+				})
+				
+				var arrays = [3,5,8,1,0,7,2,4,9];
+				var hh = arrays.filter(function(value,index,arr){
+					if(value>7){
+						return this;
+					}
+				})
+				
+				console.log("我是新数组:"+hh)
+				var num = 11116;
+				console.log(num.toPrecision(4))
+				var ss = "12345678";
+				console.log(ss.charAt(3));
+				
+				var myobj = {
+					"index":0,
+					"name":"xiaohei",
+					"hpbbyy":"read"
+				}
+				console.log(myobj);
+				var myjson = JSON.stringify(myobj,["name","hpbbyy"]);
+				console.log(myjson);
+				var jiexi = JSON.parse(myjson)
+				console.log(jiexi);
+				console.table(myobj);
+				console.debug(myobj);
+				console.profileEnd();
+				console.timeEnd();
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div id="div" style="padding-top:40px;width: 200px;height: 200px;background: red;margin: 0 auto;">
+			<p class="p1 p3 p4" style="border:5px solid #4caf50;padding-left: 30px;margin-left: 15px;">闭关闭关</p>
+			<p class="p2">少说话，多做事</p>
+		</div>
+		
+		<ul class="uu">
+			<li class="chen" style="border: 3px solid yellow;font-weight: bold;">dont lose your dream!</li>
+			<li class="xiao">dont lose your dream!</li>
+			<li class="feng">dont lose your dream!</li>
+			<li class="dream">dont lose your dream!</li>
+		</ul>
+		<div class="man">
+			
+		</div>
+		<script>
+			//工厂模式：用函数来封装  以特定接口创建对象  的细节
+			//解决问题：可多次调用，创建多个相似对象
+			//未解决问题：对象识别问题
+			function createPerson(name,age,job){
+				var o = new Object();
+				o.name = name;
+				o.age = age;
+				o.job = job;
+				o.sayNmae = function(){
+					alert(this.name);
+				};
+				
+				return o;
+			}
+			var person1 = createPerson("xiaohei",30,"student")
+			
+			//构造函数模式：
+			//解决问题：创建特定类型的对象
+			//自身缺陷：构造函数内的每个方法，都要在实例上重新创建；不同实例的同名函数不是同一个Function实例，是不相等的。
+			//会导致不同的作用域链和标识符解析
+			function Person(name,age,job){
+				this.name = name;
+				this.age = age;
+				this.job = job;
+				this.sayName = function(){
+					alert(this.name);
+				};
+			}
+			
+			var person2 = new Person("xiao",22,"doctor");
+//			person2.sayName();
+			
+			
+			//原型模式：
+			//创建的每一个函数都有一个prototype(原型)属性，该属性是一个指针，，指向一个对象，
+			//该对象包含特定类型所有实例共享的所有方法和属性
+			function Person(){
+				
+			};
+			
+			Person.prototype.name = "feng";
+			Person.prototype.age = 11;
+			Person.prototype.job = "teacher";
+			Person.prototype.sayName = function(){
+				alert(this.name);
+			};
+			
+			var person3 = new Person();
+			person3.sayName();
+		</script>
+	</body>
+</html>
